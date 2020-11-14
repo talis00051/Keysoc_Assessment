@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.talischeung.keysoc_assessment.R
+import com.talischeung.keysoc_assessment.fragment.AlbumsFragment
 import com.talischeung.keysoc_assessment.inTransaction
 
 class MainActivity : BaseActivity() {
@@ -18,7 +19,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        replaceFragment(Fragment())
+        replaceFragment(AlbumsFragment.newInstance())
     }
 
     private fun <F> replaceFragment(fragment: F) where F : Fragment {
