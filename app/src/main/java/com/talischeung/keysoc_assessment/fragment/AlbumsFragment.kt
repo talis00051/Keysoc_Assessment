@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.talischeung.keysoc_assessment.R
@@ -36,7 +37,7 @@ class AlbumsFragment: BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvAlbums.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.rvAlbums.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
         albumsViewModel.setupHandler(object: AlbumHandler {
             override fun onClickAlbum(view: View, album: AlbumViewModel) {
                 LogD(album)
