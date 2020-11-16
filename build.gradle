@@ -4,6 +4,7 @@ buildscript {
         kotlin_version = '1.4.10'
         dagger = "2.16"
         lifecycleVersion = '2.2.0'
+        room_version = "2.2.5"
     }
     repositories {
         google()

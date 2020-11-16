@@ -1,6 +1,9 @@
 package com.talischeung.keysoc_assessment.util
 
+import android.content.res.ColorStateList
+import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -22,4 +25,10 @@ fun ImageView.setImageUrl(url: String?) {
     }else{
         Picasso.get().load(R.mipmap.ic_launcher).into(this)
     }
+}
+
+@BindingAdapter("isFav")
+fun ImageButton.setFavouriteTint(isFav: Boolean) {
+    val color = ContextCompat.getColor(context, if (isFav) R.color.fav_pink else R.color.fav_gray)
+    this.imageTintList = ColorStateList.valueOf(color)
 }

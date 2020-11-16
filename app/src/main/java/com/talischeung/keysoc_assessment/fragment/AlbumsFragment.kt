@@ -1,18 +1,20 @@
 package com.talischeung.keysoc_assessment.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.talischeung.keysoc_assessment.R
 import com.talischeung.keysoc_assessment.databinding.FragmentAlbumsBinding
 import com.talischeung.keysoc_assessment.handler.AlbumHandler
+import com.talischeung.keysoc_assessment.util.FavouriteManager
 import com.talischeung.keysoc_assessment.util.LogD
+import com.talischeung.keysoc_assessment.util.setFavouriteTint
 import com.talischeung.keysoc_assessment.viewmodel.AlbumViewModel
 import com.talischeung.keysoc_assessment.viewmodel.AlbumsViewModel
 
@@ -43,11 +45,18 @@ class AlbumsFragment: BaseFragment() {
                 LogD(album)
             }
 
-            override fun onClickFavourite(view: View, album: AlbumViewModel) {
-                LogD(album)
+            override fun onClickFavourite(view: View, collectionId: String) {
+                if (FavouriteManager.getFavourites().contains(collectionId)) {
+                    FavouriteManager.deleteFavourite(collectionId)
+                    (view as ImageButton).setFavouriteTint(false)
+                } else {
+                    FavouriteManager.addFavourite(collectionId)
+                    (view as ImageButton).setFavouriteTint(true)
+                }
             }
         })
         binding.albumsViewModel = albumsViewModel
         albumsViewModel.loadAlbums()
+
     }
 }

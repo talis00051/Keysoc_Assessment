@@ -11,4 +11,6 @@
     <!-- Dark Theme -->
     <color name="bg_black">#FF000000</color>
     <color name="text_white">#FFFFFFFF</color>
+    <color name="fav_gray">#888888</color>
+    <color name="fav_pink">#E91E63</color>
 </resources>

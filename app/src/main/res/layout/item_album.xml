@@ -38,9 +38,22 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
+            <ImageButton
+                android:id="@+id/album_fav_btn"
+                android:layout_width="36dp"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_favorite_24"
+                app:isFav="@{album.isFav}"
+                android:onClick="@{(v) -> handler.onClickFavourite(v, album.collectionId)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/album_image" />
+
+
             <TextView
                 android:id="@+id/album_name"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:ellipsize="end"
                 android:maxLines="2"
@@ -50,12 +63,12 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/album_fav_btn"
                 app:layout_constraintTop_toBottomOf="@+id/album_image" />
 
             <TextView
                 android:id="@+id/album_artist"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:ellipsize="end"
                 android:maxLines="2"
@@ -65,7 +78,7 @@
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/album_fav_btn"
                 app:layout_constraintTop_toBottomOf="@+id/album_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
