@@ -1,52 +1,45 @@
 package com.talischeung.keysoc_assessment.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.talischeung.keysoc_assessment.R
 import com.talischeung.keysoc_assessment.activity.MainActivity
-import com.talischeung.keysoc_assessment.databinding.FragmentAlbumsBinding
-import com.talischeung.keysoc_assessment.handler.AlbumHandler
+import com.talischeung.keysoc_assessment.databinding.FragmentFavouriteBinding
+import com.talischeung.keysoc_assessment.handler.FavouriteHandler
 import com.talischeung.keysoc_assessment.util.FavouriteManager
-import com.talischeung.keysoc_assessment.util.LogD
 import com.talischeung.keysoc_assessment.util.setFavouriteTint
-import com.talischeung.keysoc_assessment.viewmodel.AlbumViewModel
-import com.talischeung.keysoc_assessment.viewmodel.AlbumsViewModel
+import com.talischeung.keysoc_assessment.viewmodel.FavouritesViewModel
 
-class AlbumsFragment: BaseFragment() {
-    private lateinit var binding: FragmentAlbumsBinding
-    private lateinit var albumsViewModel: AlbumsViewModel
+class FavouritesFragment: BaseFragment() {
+    private lateinit var binding: FragmentFavouriteBinding
+    private lateinit var favouritesViewModel: FavouritesViewModel
 
     companion object {
-        fun newInstance() = AlbumsFragment()
+        fun newInstance() = FavouritesFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        albumsViewModel = ViewModelProvider(this).get(AlbumsViewModel::class.java)
+        favouritesViewModel = ViewModelProvider(this).get(FavouritesViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_albums, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favourite, container, false)
         binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvAlbums.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+        binding.rvAlbums.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        albumsViewModel.setupHandler(object: AlbumHandler {
-            override fun onClickAlbum(view: View, album: AlbumViewModel) {
-                LogD(album)
-            }
-
+        favouritesViewModel.setupHandler(object: FavouriteHandler {
             override fun onClickFavourite(view: View, collectionId: String) {
                 if (FavouriteManager.getFavourites().contains(collectionId)) {
                     FavouriteManager.deleteFavourite(collectionId)
@@ -57,19 +50,18 @@ class AlbumsFragment: BaseFragment() {
                 }
             }
         })
-        binding.albumsViewModel = albumsViewModel
-        albumsViewModel.loadAlbums()
 
+        binding.favouritesViewModel = favouritesViewModel
+        favouritesViewModel.loadFavouriteAlbums()
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.action_bar_albums, menu)
+        inflater.inflate(R.menu.action_bar_favourite, menu)
 
         // Set Menu Button Color
-        val favIcon = menu.findItem(R.id.fav_button)?.icon
-        favIcon?.setTint(ContextCompat.getColor(context!!, R.color.fav_pink))
-        menu.findItem(R.id.fav_button)?.icon = favIcon
+        val albumIcon = menu.findItem(R.id.album_button)?.icon
+        albumIcon?.setTint(ContextCompat.getColor(context!!, R.color.text_white))
+        menu.findItem(R.id.album_button)?.icon = albumIcon
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -77,8 +69,8 @@ class AlbumsFragment: BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId) {
-            R.id.fav_button -> {
-                (activity as MainActivity).replaceFragment(FavouritesFragment.newInstance())
+            R.id.album_button -> {
+                (activity as MainActivity).replaceFragment(AlbumsFragment.newInstance())
             }
         }
 

@@ -16,6 +16,7 @@ abstract class BaseViewModel: ViewModel(){
     private fun inject() {
         when (this) {
             is AlbumsViewModel -> injector.inject(this)
+            is FavouritesViewModel -> injector.inject(this)
         }
     }
 }

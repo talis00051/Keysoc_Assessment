@@ -9,6 +9,7 @@ import javax.inject.Singleton
 interface ViewModelInjector {
 
     fun inject(albumsViewModel: AlbumsViewModel)
+    fun inject(favouritesViewModel: FavouritesViewModel)
 
     @Component.Builder
     interface Builder {

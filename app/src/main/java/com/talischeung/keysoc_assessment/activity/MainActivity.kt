@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.talischeung.keysoc_assessment.R
 import com.talischeung.keysoc_assessment.fragment.AlbumsFragment
+import com.talischeung.keysoc_assessment.fragment.FavouritesFragment
 import com.talischeung.keysoc_assessment.inTransaction
 
 class MainActivity : BaseActivity() {
@@ -25,35 +26,25 @@ class MainActivity : BaseActivity() {
         replaceFragment(AlbumsFragment.newInstance())
     }
 
-    private fun <F> replaceFragment(fragment: F) where F : Fragment {
+    fun <F> replaceFragment(fragment: F) where F : Fragment {
         supportFragmentManager.inTransaction {
             currentFragment = fragment
             replace(FRAGMENT_ID, fragment)
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.action_bar_menu, menu)
-
-        // Set Favourite Button Color
-        val favIcon = menu?.findItem(R.id.fav_button)?.icon
-        favIcon?.setTint(ContextCompat.getColor(applicationContext, R.color.fav_pink))
-        menu?.findItem(R.id.fav_button)?.icon = favIcon
-
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        val id = item.itemId
-
-        when(id) {
-            R.id.fav_button -> {
-
+    override fun onBackPressed() {
+        val fm = supportFragmentManager
+        for (frag in fm.fragments) {
+            if (frag.isVisible) {
+                val childFm = frag.childFragmentManager
+                if (childFm.backStackEntryCount > 0) {
+                    childFm.popBackStack()
+                    return
+                }
             }
         }
-
-        return super.onOptionsItemSelected(item)
+        super.onBackPressed()
     }
 
     override fun showLoading(): Boolean {
